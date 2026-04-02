@@ -1,0 +1,29 @@
+version: 2
+
+builds:
+  - main: ./cmd/lazycc
+    binary: lazycc
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+
+archives:
+  - format: tar.gz
+
+brews:
+  - repository:
+      owner: hwangstar156
+      name: homebrew-tap
+    homepage: https://github.com/hwangstar156/lazycc
+    description: TUI monitor for Claude Code sessions
+    license: MIT
+    install: |
+      bin.install "lazycc"
+
+changelog:
+  sort: asc
