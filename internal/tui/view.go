@@ -176,7 +176,10 @@ func renderTodoOverlay(s *claude.Session) string {
 }
 
 func (m Model) renderHelp() string {
-	return helpStyle.Render(" ↑↓/jk select | enter attach | x kill | t todo | A all | r refresh | q quit")
+	help := lipgloss.NewStyle().Foreground(lipgloss.Color("46")).Render(
+		" ↑↓/jk select | enter attach | x kill | t todo | A all | r refresh | q quit",
+	)
+	return help
 }
 
 func truncateStr(s string, maxLen int) string {
