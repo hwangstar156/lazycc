@@ -7,14 +7,16 @@ import (
 )
 
 type Model struct {
-	sessions  []claude.Session
-	cursor    int
-	width     int
-	height    int
-	showDead  bool
-	showTodos bool
-	viewport  viewport.Model
-	err       error
+	sessions       []claude.Session
+	cursor         int
+	width          int
+	height         int
+	showDead       bool
+	showTodos      bool
+	viewport       viewport.Model
+	err            error
+	lastContent    string // track viewport content to avoid unnecessary re-renders
+	lastSelectedID string // track selected session to detect change
 }
 
 func NewModel() Model {

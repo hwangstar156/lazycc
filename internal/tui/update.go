@@ -45,10 +45,17 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			if m.cursor >= len(filtered) {
 				m.cursor = max(0, len(filtered)-1)
 			}
-			// Update viewport content for selected session
+			// Update viewport only if content actually changed
 			if s := m.selected(); s != nil {
-				m.viewport.SetContent(renderTranscriptContent(s))
-				m.viewport.GotoBottom()
+				content := renderTranscriptContent(s)
+				if content != m.lastContent {
+					wasAtBottom := m.viewport.AtBottom()
+					m.viewport.SetContent(content)
+					m.lastContent = content
+					if wasAtBottom {
+						m.viewport.GotoBottom()
+					}
+				}
 			}
 		}
 

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"os"
 	"path/filepath"
+	"sort"
 	"syscall"
 	"time"
 )
@@ -76,6 +77,15 @@ func LoadSessions() ([]Session, error) {
 	for _, s := range seen {
 		sessions = append(sessions, s)
 	}
+
+	// Alive first, then by StartedAt descending (newest first)
+	sort.Slice(sessions, func(i, j int) bool {
+		if sessions[i].Alive != sessions[j].Alive {
+			return sessions[i].Alive
+		}
+		return sessions[i].StartedAt > sessions[j].StartedAt
+	})
+
 	return sessions, nil
 }
 
